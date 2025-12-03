@@ -20,6 +20,16 @@ class PetcareUserResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    protected static ?string $modelLabel = 'Usuario';
+
+    protected static ?string $pluralModelLabel = 'Usuarios';
+
+    protected static ?string $navigationLabel = 'Usuarios';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Administración';
+
+    protected static ?int $navigationSort = 302;
+
     public static function form(Schema $schema): Schema
     {
         return PetcareUserForm::configure($schema);

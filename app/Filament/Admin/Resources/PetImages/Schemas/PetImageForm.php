@@ -16,17 +16,23 @@ class PetImageForm
         return $schema
             ->components([
                 TextInput::make('pet_id')
+                    ->label('Mascota')
                     ->required()
                     ->numeric(),
                 FileUpload::make('image_url')
+                    ->label('Imagen')
                     ->image()
                     ->required(),
                 Select::make('image_type')
-                    ->options(['profile' => 'Profile', 'medical' => 'Medical', 'general' => 'General'])
+                    ->label('Tipo de Imagen')
+                    ->options(['profile' => 'Perfil', 'medical' => 'Médica', 'general' => 'General'])
                     ->default('general'),
-                TextInput::make('description'),
-                Toggle::make('is_primary'),
+                TextInput::make('description')
+                    ->label('Descripción'),
+                Toggle::make('is_primary')
+                    ->label('Principal'),
                 DateTimePicker::make('uploaded_at')
+                    ->label('Fecha de Subida')
                     ->required(),
             ]);
     }

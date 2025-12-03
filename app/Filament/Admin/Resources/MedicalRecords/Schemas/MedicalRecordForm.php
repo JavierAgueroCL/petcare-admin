@@ -2,11 +2,14 @@
 
 namespace App\Filament\Admin\Resources\MedicalRecords\Schemas;
 
+use App\Models\Clinic;
+use App\Models\Pet;
+use App\Models\PetcareUser;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 
 class MedicalRecordForm
@@ -15,45 +18,72 @@ class MedicalRecordForm
     {
         return $schema
             ->components([
-                TextInput::make('pet_id')
+                Select::make('pet_id')
+                    ->label('Mascota')
                     ->required()
-                    ->numeric(),
-                TextInput::make('veterinarian_id')
-                    ->numeric(),
-                TextInput::make('clinic_id')
-                    ->numeric(),
+                    ->searchable()
+                    ->options(Pet::all()->pluck('name', 'id'))
+                    ->preload(),
+                Select::make('veterinarian_id')
+                    ->label('Veterinario')
+                    ->searchable()
+                    ->options(PetcareUser::where('role', 'veterinarian')->get()->pluck('name', 'id'))
+                    ->preload(),
+                Select::make('clinic_id')
+                    ->label('Clínica')
+                    ->searchable()
+                    ->options(Clinic::all()->pluck('name', 'id'))
+                    ->preload(),
                 Select::make('record_type')
+                    ->label('Tipo de Registro')
                     ->options([
-            'consultation' => 'Consultation',
-            'surgery' => 'Surgery',
-            'emergency' => 'Emergency',
-            'vaccination' => 'Vaccination',
-            'checkup' => 'Checkup',
-            'other' => 'Other',
-        ])
+                        'consultation' => 'Consulta',
+                        'surgery' => 'Cirugía',
+                        'emergency' => 'Emergencia',
+                        'vaccination' => 'Vacunación',
+                        'checkup' => 'Revisión',
+                        'other' => 'Otro',
+                    ])
                     ->required(),
                 DatePicker::make('date')
+                    ->label('Fecha')
                     ->required(),
                 Textarea::make('diagnosis')
+                    ->label('Diagnóstico')
                     ->columnSpanFull(),
                 Textarea::make('treatment')
+                    ->label('Tratamiento')
                     ->columnSpanFull(),
                 Textarea::make('prescriptions')
+                    ->label('Prescripciones')
                     ->columnSpanFull(),
                 Textarea::make('notes')
+                    ->label('Notas')
                     ->columnSpanFull(),
                 TextInput::make('weight_kg')
+                    ->label('Peso (kg)')
                     ->numeric(),
                 TextInput::make('temperature_celsius')
+                    ->label('Temperatura (°C)')
                     ->numeric(),
                 TextInput::make('heart_rate')
+                    ->label('Frecuencia Cardíaca')
                     ->numeric(),
-                DatePicker::make('next_appointment'),
+                DatePicker::make('next_appointment')
+                    ->label('Próxima Cita'),
                 TextInput::make('cost')
+                    ->label('Costo (CLP)')
                     ->numeric()
                     ->prefix('$'),
-                TextInput::make('attachments'),
-                Toggle::make('is_encrypted'),
+                FileUpload::make('attachments')
+                    ->label('Archivos Adjuntos')
+                    ->image()
+                    ->multiple()
+                    ->maxFiles(5)
+                    ->disk('public')
+                    ->directory('medical-records')
+                    ->maxSize(5120)
+                    ->columnSpanFull(),
             ]);
     }
 }

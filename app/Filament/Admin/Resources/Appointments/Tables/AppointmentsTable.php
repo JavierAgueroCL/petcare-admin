@@ -15,33 +15,60 @@ class AppointmentsTable
     {
         return $table
             ->columns([
-                TextColumn::make('user_id')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('pet_id')
-                    ->numeric()
+                TextColumn::make('pet.name')
+                    ->label('Mascota')
+                    ->searchable()
                     ->sortable(),
                 TextColumn::make('appointment_type')
-                    ->badge(),
+                    ->label('Tipo de Cita')
+                    ->badge()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'checkup' => 'Revisión',
+                        'vaccine' => 'Vacuna',
+                        'grooming' => 'Peluquería',
+                        'emergency' => 'Emergencia',
+                        'surgery' => 'Cirugía',
+                        'other' => 'Otro',
+                        default => $state,
+                    }),
                 TextColumn::make('appointment_datetime')
+                    ->label('Fecha y Hora')
                     ->dateTime()
                     ->sortable(),
                 TextColumn::make('status')
-                    ->badge(),
+                    ->label('Estado')
+                    ->badge()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'scheduled' => 'Programada',
+                        'confirmed' => 'Confirmada',
+                        'completed' => 'Completada',
+                        'cancelled' => 'Cancelada',
+                        default => $state,
+                    })
+                    ->color(fn (string $state): string => match ($state) {
+                        'scheduled' => 'warning',
+                        'confirmed' => 'info',
+                        'completed' => 'success',
+                        'cancelled' => 'danger',
+                        default => 'gray',
+                    }),
                 TextColumn::make('clinic_name')
+                    ->label('Nombre de la Clínica')
                     ->searchable(),
                 TextColumn::make('veterinarian_name')
+                    ->label('Nombre del Veterinario')
                     ->searchable(),
                 TextColumn::make('cost')
-                    ->money()
+                    ->label('Costo')
+                    ->money('CLP')
                     ->sortable(),
-                IconColumn::make('reminder_sent')
-                    ->boolean(),
                 TextColumn::make('created_at')
+                    ->label('Fecha de Creación')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
+                    ->label('Fecha de Actualización')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

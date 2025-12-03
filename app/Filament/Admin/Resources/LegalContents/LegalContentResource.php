@@ -20,6 +20,16 @@ class LegalContentResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    protected static ?string $modelLabel = 'Contenido Legal';
+
+    protected static ?string $pluralModelLabel = 'Contenidos Legales';
+
+    protected static ?string $navigationLabel = 'Contenidos Legales';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Administración';
+
+    protected static ?int $navigationSort = 301;
+
     public static function form(Schema $schema): Schema
     {
         return LegalContentForm::configure($schema);

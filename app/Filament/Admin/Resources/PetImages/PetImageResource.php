@@ -20,6 +20,16 @@ class PetImageResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    protected static ?string $modelLabel = 'Imagen de Mascota';
+
+    protected static ?string $pluralModelLabel = 'Imágenes de Mascotas';
+
+    protected static ?string $navigationLabel = 'Imágenes';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Gestión de Mascotas';
+
+    protected static ?int $navigationSort = 200;
+
     public static function form(Schema $schema): Schema
     {
         return PetImageForm::configure($schema);

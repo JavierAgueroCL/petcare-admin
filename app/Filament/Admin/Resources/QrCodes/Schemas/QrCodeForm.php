@@ -14,16 +14,21 @@ class QrCodeForm
         return $schema
             ->components([
                 TextInput::make('pet_id')
+                    ->label('Mascota')
                     ->required()
                     ->numeric(),
                 TextInput::make('qr_code')
+                    ->label('Código QR')
                     ->required(),
                 FileUpload::make('qr_image_url')
+                    ->label('Imagen QR')
                     ->image(),
                 TextInput::make('total_scans')
+                    ->label('Total de Escaneos')
                     ->numeric()
                     ->default(0),
-                DateTimePicker::make('last_scanned_at'),
+                DateTimePicker::make('last_scanned_at')
+                    ->label('Último Escaneo'),
             ]);
     }
 }

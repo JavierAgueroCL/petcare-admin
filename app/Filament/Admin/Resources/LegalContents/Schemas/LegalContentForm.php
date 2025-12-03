@@ -16,16 +16,21 @@ class LegalContentForm
         return $schema
             ->components([
                 Select::make('type')
-                    ->options(['terms' => 'Terms', 'privacy' => 'Privacy'])
+                    ->label('Tipo')
+                    ->options(['terms' => 'Términos y Condiciones', 'privacy' => 'Política de Privacidad'])
                     ->required(),
                 Textarea::make('content')
+                    ->label('Contenido')
                     ->required()
                     ->columnSpanFull(),
                 TextInput::make('version')
+                    ->label('Versión')
                     ->required()
                     ->default('1.0.0'),
-                Toggle::make('is_active'),
-                DatePicker::make('effective_date'),
+                Toggle::make('is_active')
+                    ->label('Activo'),
+                DatePicker::make('effective_date')
+                    ->label('Fecha de Vigencia'),
             ]);
     }
 }

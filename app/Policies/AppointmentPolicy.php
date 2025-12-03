@@ -1,0 +1,97 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Policies;
+
+use Illuminate\Foundation\Auth\User as AuthUser;
+use App\Models\Appointment;
+use Illuminate\Auth\Access\HandlesAuthorization;
+
+class AppointmentPolicy
+{
+    use HandlesAuthorization;
+    
+    public function viewAny(AuthUser $authUser): bool
+    {
+        return $authUser->can('ViewAny:Appointment');
+    }
+
+    public function view(AuthUser $authUser, Appointment $appointment): bool
+    {
+        if (!$authUser->can('View:Appointment')) {
+            return false;
+        }
+
+        // Si es veterinaria, solo puede ver sus propias citas
+        if ($authUser->hasRole('veterinaria')) {
+            return $appointment->veterinarian_id === $authUser->id;
+        }
+
+        return true;
+    }
+
+    public function create(AuthUser $authUser): bool
+    {
+        return $authUser->can('Create:Appointment');
+    }
+
+    public function update(AuthUser $authUser, Appointment $appointment): bool
+    {
+        if (!$authUser->can('Update:Appointment')) {
+            return false;
+        }
+
+        // Si es veterinaria, solo puede actualizar sus propias citas
+        if ($authUser->hasRole('veterinaria')) {
+            return $appointment->veterinarian_id === $authUser->id;
+        }
+
+        return true;
+    }
+
+    public function delete(AuthUser $authUser, Appointment $appointment): bool
+    {
+        if (!$authUser->can('Delete:Appointment')) {
+            return false;
+        }
+
+        // Si es veterinaria, solo puede eliminar sus propias citas
+        if ($authUser->hasRole('veterinaria')) {
+            return $appointment->veterinarian_id === $authUser->id;
+        }
+
+        return true;
+    }
+
+    public function restore(AuthUser $authUser, Appointment $appointment): bool
+    {
+        return $authUser->can('Restore:Appointment');
+    }
+
+    public function forceDelete(AuthUser $authUser, Appointment $appointment): bool
+    {
+        return $authUser->can('ForceDelete:Appointment');
+    }
+
+    public function forceDeleteAny(AuthUser $authUser): bool
+    {
+        return $authUser->can('ForceDeleteAny:Appointment');
+    }
+
+    public function restoreAny(AuthUser $authUser): bool
+    {
+        return $authUser->can('RestoreAny:Appointment');
+    }
+
+    public function replicate(AuthUser $authUser, Appointment $appointment): bool
+    {
+        return $authUser->can('Replicate:Appointment');
+    }
+
+    public function reorder(AuthUser $authUser): bool
+    {
+        return $authUser->can('Reorder:Appointment');
+    }
+
+}

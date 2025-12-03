@@ -16,22 +16,29 @@ class QrCodesTable
         return $table
             ->columns([
                 TextColumn::make('pet_id')
+                    ->label('Mascota')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('qr_code')
+                    ->label('Código QR')
                     ->searchable(),
-                ImageColumn::make('qr_image_url'),
+                ImageColumn::make('qr_image_url')
+                    ->label('Imagen QR'),
                 TextColumn::make('total_scans')
+                    ->label('Total de Escaneos')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('last_scanned_at')
+                    ->label('Último Escaneo')
                     ->dateTime()
                     ->sortable(),
                 TextColumn::make('created_at')
+                    ->label('Fecha de Creación')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
+                    ->label('Fecha de Actualización')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

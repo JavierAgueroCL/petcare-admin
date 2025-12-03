@@ -57,6 +57,22 @@ class MedicalRecord extends Model
     }
 
     /**
+     * Get the veterinarian that created the medical record.
+     */
+    public function veterinarian()
+    {
+        return $this->belongsTo(PetcareUser::class, 'veterinarian_id');
+    }
+
+    /**
+     * Get the clinic where the medical record was created.
+     */
+    public function clinic()
+    {
+        return $this->belongsTo(Clinic::class);
+    }
+
+    /**
      * Get the vaccines associated with this medical record.
      */
     public function vaccines()

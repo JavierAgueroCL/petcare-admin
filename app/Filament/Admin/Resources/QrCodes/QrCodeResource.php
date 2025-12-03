@@ -20,6 +20,16 @@ class QrCodeResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    protected static ?string $modelLabel = 'Código QR';
+
+    protected static ?string $pluralModelLabel = 'Códigos QR';
+
+    protected static ?string $navigationLabel = 'Códigos QR';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Gestión de Mascotas';
+
+    protected static ?int $navigationSort = 202;
+
     public static function form(Schema $schema): Schema
     {
         return QrCodeForm::configure($schema);

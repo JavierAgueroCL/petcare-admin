@@ -2,6 +2,7 @@
 
 namespace App\Filament\Admin\Resources\Pets\Schemas;
 
+use App\Models\PetcareUser;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
@@ -17,53 +18,74 @@ class PetForm
     {
         return $schema
             ->components([
-                TextInput::make('owner_id')
+                Select::make('owner_id')
+                    ->label('Propietario')
                     ->required()
-                    ->numeric(),
+                    ->searchable()
+                    ->options(PetcareUser::all()->pluck('name', 'id'))
+                    ->preload(),
                 TextInput::make('name')
+                    ->label('Nombre')
                     ->required(),
-                TextInput::make('breed'),
+                TextInput::make('breed')
+                    ->label('Raza'),
                 Select::make('gender')
-                    ->options(['male' => 'Male', 'female' => 'Female', 'unknown' => 'Unknown'])
+                    ->label('Género')
+                    ->options(['male' => 'Macho', 'female' => 'Hembra', 'unknown' => 'Desconocido'])
                     ->required(),
-                DatePicker::make('date_of_birth'),
-                TextInput::make('estimated_age_months')
-                    ->numeric(),
-                TextInput::make('color'),
+                DatePicker::make('date_of_birth')
+                    ->label('Fecha de Nacimiento'),
+                TextInput::make('color')
+                    ->label('Color'),
                 Select::make('size')
-                    ->options(['small' => 'Small', 'medium' => 'Medium', 'large' => 'Large', 'extra_large' => 'Extra large']),
+                    ->label('Tamaño')
+                    ->options(['small' => 'Pequeño', 'medium' => 'Mediano', 'large' => 'Grande', 'extra_large' => 'Extra Grande']),
                 TextInput::make('weight_kg')
+                    ->label('Peso (kg)')
                     ->numeric(),
-                TextInput::make('microchip_number'),
-                TextInput::make('national_registry_number'),
+                TextInput::make('microchip_number')
+                    ->label('Número de Microchip'),
+                TextInput::make('national_registry_number')
+                    ->label('Número de Registro Nacional'),
                 FileUpload::make('profile_image_url')
+                    ->label('Imagen de Perfil')
                     ->image(),
                 TextInput::make('qr_code')
+                    ->label('Código QR')
                     ->required(),
-                Toggle::make('is_sterilized'),
-                DatePicker::make('sterilization_date'),
+                Toggle::make('is_sterilized')
+                    ->label('Esterilizado'),
+                DatePicker::make('sterilization_date')
+                    ->label('Fecha de Esterilización'),
                 Textarea::make('special_needs')
+                    ->label('Necesidades Especiales')
                     ->columnSpanFull(),
                 Textarea::make('temperament')
+                    ->label('Temperamento')
                     ->columnSpanFull(),
                 Select::make('status')
+                    ->label('Estado')
                     ->options([
-            'active' => 'Active',
-            'lost' => 'Lost',
-            'found' => 'Found',
-            'deceased' => 'Deceased',
-            'adopted' => 'Adopted',
+            'active' => 'Activo',
+            'lost' => 'Perdido',
+            'found' => 'Encontrado',
+            'deceased' => 'Fallecido',
+            'adopted' => 'Adoptado',
         ])
                     ->default('active'),
-                DateTimePicker::make('lost_date'),
+                DateTimePicker::make('lost_date')
+                    ->label('Fecha de Pérdida'),
                 Textarea::make('lost_location')
+                    ->label('Ubicación de Pérdida')
                     ->columnSpanFull(),
-                Toggle::make('is_public'),
+                Toggle::make('is_public')
+                    ->label('Público'),
                 Select::make('species')
+                    ->label('Especie')
                     ->options([
             'perro' => 'Perro',
             'gato' => 'Gato',
-            'raton' => 'Raton',
+            'raton' => 'Ratón',
             'conejo' => 'Conejo',
             'serpiente' => 'Serpiente',
             'vaca' => 'Vaca',

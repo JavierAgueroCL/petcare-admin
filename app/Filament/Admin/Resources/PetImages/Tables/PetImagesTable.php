@@ -17,16 +17,22 @@ class PetImagesTable
         return $table
             ->columns([
                 TextColumn::make('pet_id')
+                    ->label('Mascota')
                     ->numeric()
                     ->sortable(),
-                ImageColumn::make('image_url'),
+                ImageColumn::make('image_url')
+                    ->label('Imagen'),
                 ImageColumn::make('image_type')
+                    ->label('Tipo de Imagen')
                     ->badge(),
                 TextColumn::make('description')
+                    ->label('Descripción')
                     ->searchable(),
                 IconColumn::make('is_primary')
+                    ->label('Principal')
                     ->boolean(),
                 TextColumn::make('uploaded_at')
+                    ->label('Fecha de Subida')
                     ->dateTime()
                     ->sortable(),
             ])

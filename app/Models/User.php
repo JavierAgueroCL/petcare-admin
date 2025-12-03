@@ -6,11 +6,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, HasRoles, Notifiable;
 
     /**
      * The table associated with the model.
@@ -67,5 +68,21 @@ class User extends Authenticatable
     public function appointments()
     {
         return $this->hasMany(Appointment::class);
+    }
+
+    /**
+     * Get the veterinarian schedules for the user.
+     */
+    public function veterinarianSchedules()
+    {
+        return $this->hasMany(VeterinarianSchedule::class);
+    }
+
+    /**
+     * Clínicas donde trabaja el veterinario
+     */
+    public function clinics()
+    {
+        return $this->belongsToMany(Clinic::class, 'clinic_user');
     }
 }

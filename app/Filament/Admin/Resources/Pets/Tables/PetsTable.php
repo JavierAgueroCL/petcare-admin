@@ -5,8 +5,6 @@ namespace App\Filament\Admin\Resources\Pets\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -16,57 +14,41 @@ class PetsTable
     {
         return $table
             ->columns([
-                TextColumn::make('owner_id')
-                    ->numeric()
-                    ->sortable(),
+                TextColumn::make('owner.name')
+                    ->label('Propietario')
+                    ->sortable()
+                    ->searchable(),
                 TextColumn::make('name')
+                    ->label('Nombre')
                     ->searchable(),
                 TextColumn::make('breed')
+                    ->label('Raza')
                     ->searchable(),
                 TextColumn::make('gender')
-                    ->badge(),
-                TextColumn::make('date_of_birth')
-                    ->date()
-                    ->sortable(),
-                TextColumn::make('estimated_age_months')
-                    ->numeric()
-                    ->sortable(),
+                    ->label('Género')
+                    ->badge()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'male' => 'Macho',
+                        'female' => 'Hembra',
+                        default => $state,
+                    }),
                 TextColumn::make('color')
+                    ->label('Color')
                     ->searchable(),
-                TextColumn::make('size')
-                    ->badge(),
                 TextColumn::make('weight_kg')
+                    ->label('Peso (kg)')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('microchip_number')
-                    ->searchable(),
-                TextColumn::make('national_registry_number')
-                    ->searchable(),
-                ImageColumn::make('profile_image_url'),
-                TextColumn::make('qr_code')
-                    ->searchable(),
-                IconColumn::make('is_sterilized')
-                    ->boolean(),
-                TextColumn::make('sterilization_date')
-                    ->date()
-                    ->sortable(),
-                TextColumn::make('status')
-                    ->badge(),
-                TextColumn::make('lost_date')
-                    ->dateTime()
-                    ->sortable(),
-                IconColumn::make('is_public')
-                    ->boolean(),
                 TextColumn::make('created_at')
+                    ->label('Fecha de Creación')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
+                    ->label('Fecha de Actualización')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('species')
-                    ->badge(),
             ])
             ->filters([
                 //

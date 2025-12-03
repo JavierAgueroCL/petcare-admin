@@ -18,44 +18,62 @@ class PetcareUserForm
         return $schema
             ->components([
                 TextInput::make('email')
-                    ->label('Email address')
+                    ->label('Correo Electrónico')
                     ->email()
                     ->required(),
                 TextInput::make('password')
+                    ->label('Contraseña')
                     ->password()
                     ->required(),
                 TextInput::make('phone')
+                    ->label('Teléfono')
                     ->tel(),
                 TextInput::make('first_name')
+                    ->label('Nombre')
                     ->required(),
                 TextInput::make('last_name')
+                    ->label('Apellido')
                     ->required(),
-                TextInput::make('rut'),
-                DatePicker::make('date_of_birth'),
+                TextInput::make('rut')
+                    ->label('RUT'),
+                DatePicker::make('date_of_birth')
+                    ->label('Fecha de Nacimiento'),
                 FileUpload::make('profile_image_url')
+                    ->label('Imagen de Perfil')
                     ->image(),
                 Textarea::make('address')
+                    ->label('Dirección')
                     ->columnSpanFull(),
-                TextInput::make('commune'),
-                TextInput::make('region'),
+                TextInput::make('commune')
+                    ->label('Comuna'),
+                TextInput::make('region')
+                    ->label('Región'),
                 Select::make('role')
+                    ->label('Rol')
                     ->options([
-            'owner' => 'Owner',
-            'veterinarian' => 'Veterinarian',
-            'ngo' => 'Ngo',
-            'municipality' => 'Municipality',
-            'admin' => 'Admin',
+            'owner' => 'Propietario',
+            'veterinarian' => 'Veterinario',
+            'ngo' => 'ONG',
+            'municipality' => 'Municipalidad',
+            'admin' => 'Administrador',
         ])
                     ->default('owner')
                     ->required(),
-                Toggle::make('is_active'),
-                Toggle::make('email_verified'),
-                Toggle::make('phone_verified'),
-                DateTimePicker::make('last_login'),
+                Toggle::make('is_active')
+                    ->label('Activo'),
+                Toggle::make('email_verified')
+                    ->label('Email Verificado'),
+                Toggle::make('phone_verified')
+                    ->label('Teléfono Verificado'),
+                DateTimePicker::make('last_login')
+                    ->label('Último Inicio de Sesión'),
                 TextInput::make('language')
+                    ->label('Idioma')
                     ->default('es'),
-                TextInput::make('notification_settings'),
-                TextInput::make('preferences'),
+                TextInput::make('notification_settings')
+                    ->label('Configuración de Notificaciones'),
+                TextInput::make('preferences')
+                    ->label('Preferencias'),
             ]);
     }
 }
